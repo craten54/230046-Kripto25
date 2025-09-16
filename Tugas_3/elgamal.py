@@ -26,22 +26,22 @@ def power(base, exp, mod):
 
 # Generate key
 def generate_keys():
-    p = 37 # bilangan prima
-    g = 3   # generator
-    x = random.randint(1, p-2) # private key
-    y = power(g, x, p)         # public key
-    return (p, g, y), x        # (public, private)
+    p = 427
+    g = 3
+    x = random.randint(1, p - 2)  # private key
+    y = power(g, x, p)            # public key
+    return (p, g, y), x           # (public, private)
 
-# Enkripsi
-def encrypt(public_key, m):
+# Enkripsi satu angka
+def encrypt_number(public_key, m):
     p, g, y = public_key
-    k = random.randint(1, p-2)
+    k = random.randint(1, p - 2)
     a = power(g, k, p)
     b = (m * power(y, k, p)) % p
     return (a, b)
 
-# Dekripsi
-def decrypt(private_key, public_key, ciphertext):
+# Dekripsi satu angka
+def decrypt_number(private_key, public_key, ciphertext):
     p, g, y = public_key
     a, b = ciphertext
     s = power(a, private_key, p)
@@ -49,16 +49,44 @@ def decrypt(private_key, public_key, ciphertext):
     m = (b * s_inv) % p
     return m
 
+# Enkripsi umum (angka atau string)
+def encrypt(public_key, message):
+    if isinstance(message, int):
+        return encrypt_number(public_key, message)
+    elif isinstance(message, str):
+        return [encrypt_number(public_key, ord(ch)) for ch in message]
+    else:
+        raise TypeError("Message harus int atau str")
+
+# Dekripsi umum (angka atau string)
+def decrypt(private_key, public_key, ciphertext):
+    if isinstance(ciphertext, tuple):
+        return decrypt_number(private_key, public_key, ciphertext)
+    elif isinstance(ciphertext, list):
+        return ''.join(chr(decrypt_number(private_key, public_key, c)) for c in ciphertext)
+    else:
+        raise TypeError("Ciphertext harus tuple atau list")
+
 # Contoh penggunaan
 public_key, private_key = generate_keys()
 print("\nElGamal Cipher")
 print("Public Key :", public_key)
 print("Private Key:", private_key)
 
-message = 123  # pesan numerik
-ciphertext = encrypt(public_key, message)
-decrypted = decrypt(private_key, public_key, ciphertext)
+# Pesan numerik
+message_num = 123
+cipher_num = encrypt(public_key, message_num)
+decrypted_num = decrypt(private_key, public_key, cipher_num)
+print("\n=== Numerik ===")
+print("Plaintext :", message_num)
+print("Encrypted :", cipher_num)
+print("Decrypted :", decrypted_num)
 
-print("Plaintext  :", message)
-print("Encrypted  :", ciphertext)
-print("Decrypted  :", decrypted)
+# Pesan string
+message_str = "EZKRIPTOGRAFI"
+cipher_str = encrypt(public_key, message_str)
+decrypted_str = decrypt(private_key, public_key, cipher_str)
+print("\n=== String ===")
+print("Plaintext :", message_str)
+print("Encrypted :", cipher_str)
+print("Decrypted :", decrypted_str)

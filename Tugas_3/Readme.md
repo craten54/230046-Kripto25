@@ -19,9 +19,9 @@ Keduanya mendukung **enkripsi** dan **dekripsi**.
 
 ### 🔑 Rumus
 - **Enkripsi**:
-  \( C_i = (P_i + K_i) \mod 26 \)
+    C<sub>i​</sub>=(P<sub>i</sub>​+K<sub>i​</sub>)mod26
 - **Dekripsi**:
-  \( P_i = (C_i - K_i) \mod 26 \)
+    P<sub>i</sub> = (C<sub>i</sub> - K<sub>i</sub>) mod 26
 
 ### 🚀 Contoh Penggunaan
 ```python
@@ -65,7 +65,7 @@ print("Decrypted :", decrypted)
 ### 🚀 Contoh Penggunaan
 ``` python
 p = 467  # bilangan prima
-g = 2    # generator
+g = 3    # generator
 x = 127  # private key
 y = pow(g, x, p)  # public key
 
@@ -79,3 +79,19 @@ print("Ciphertext:", (a, b))
 decrypted = decrypt_elgamal((a, b), p, x)
 print("Decrypted:", decrypted)
 ```
+
+## 🖥️ Screenshot Running Program
+Hasil percobaan:
+- Vigenère Cipher dengan
+  plaintext = ASPRAKGANTENG
+  Key = STAN
+- ElGamal Cipher dengan
+  p = 37 (bilangan prima)
+  g = 3 (generator)
+  x = random integer
+  k = random integer
+
+
+### Screenshot
+![Output Vigenère Cipher](vigenere.png)
+![ElGamal Cipher](elgamal.png)
