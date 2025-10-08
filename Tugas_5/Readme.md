@@ -89,4 +89,4 @@ Hasil percobaan:
 
 ## 🧠 Catatan
 - Format gambar **harus PNG** agar tidak kehilangan data LSB saat penyimpanan.
-- Jika file hasil decode tidak terbaca sebagai teks, program otomatis menyimpannya sebagai file gambar (`decoded_secret.png`).
+- Jika file hasil decode tidak terbaca sebagai teks, program otomatis menyimpannya sebagai file gambar (`hasil_decode.png`).
